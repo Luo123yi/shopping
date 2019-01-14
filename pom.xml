@@ -10,6 +10,7 @@
     </parent>
     <groupId>com.neuedu</groupId>
     <artifactId>shopping</artifactId>
+    <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>shopping</name>
     <description>Demo project for Spring Boot</description>
@@ -214,15 +215,63 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>[7.2.0, 7.2.99]</version>
         </dependency>
+        <!-- 因配置外部TOMCAT 而配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.neuedu</groupId>
+            <artifactId>com.neuedu</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-sdk-java-3.3.0-source.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.neuedu</groupId>
+            <artifactId>com.neuedu</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-sdk-java-3.3.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.neuedu</groupId>
+            <artifactId>com.neuedu</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-trade-sdk-20161215-source.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.neuedu</groupId>
+            <artifactId>com.neuedu</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-trade-sdk-20161215.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
+        <!--引入本地资源-->
+        <resources>
+            <resource>
+                <directory>lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--逆向工程-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -241,6 +290,33 @@
                     <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
                     <verbose>true</verbose>
                     <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <fork>true</fork>
+                    <executable> C:\Program Files\Java\jdk1.8.0_91\bin\javac.exe </executable>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <compilerArguments>
+                        <bootclasspath> C:\Program Files\Java\jdk1.8.0_91\jre\lib\rt.jar </bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>
