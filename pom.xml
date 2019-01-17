@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.neuedu</groupId>
     <artifactId>shopping</artifactId>
-    <packaging>war</packaging>
+    <!--<packaging>war</packaging>-->
     <version>0.0.1-SNAPSHOT</version>
     <name>shopping</name>
     <description>Demo project for Spring Boot</description>
@@ -226,41 +226,64 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+
+        <!-- 导入自定义jar包 -->
+        <!-- 工具类 -->
         <dependency>
-            <groupId>com.neuedu</groupId>
-            <artifactId>com.neuedu</artifactId>
-            <version>1.0</version>
+            <groupId>com.alipay</groupId>
+            <artifactId>sdk</artifactId>
+            <version>0.0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/alipay-sdk-java-3.3.0-source.jar</systemPath>
+            <systemPath>
+                ${project.basedir}/src/main/resources/lib/alipay-sdk-java-3.3.0.jar
+            </systemPath>
         </dependency>
         <dependency>
-            <groupId>com.neuedu</groupId>
-            <artifactId>com.neuedu</artifactId>
-            <version>1.0</version>
+            <groupId>com.alipay</groupId>
+            <artifactId>sdk</artifactId>
+            <version>0.0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/alipay-sdk-java-3.3.0.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.neuedu</groupId>
-            <artifactId>com.neuedu</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/alipay-trade-sdk-20161215-source.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.neuedu</groupId>
-            <artifactId>com.neuedu</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/alipay-trade-sdk-20161215.jar</systemPath>
+            <systemPath>
+                ${project.basedir}/src/main/resources/lib/alipay-trade-sdk-20161215.jar
+            </systemPath>
         </dependency>
     </dependencies>
 
     <build>
+        <!-- 打的jar包默认名-->
+        <finalName>shopping-v1.0</finalName>
         <!--引入本地资源-->
         <resources>
             <resource>
-                <directory>lib</directory>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.txt</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <targetPath>config/</targetPath>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
                 <targetPath>BOOT-INF/lib/</targetPath>
                 <includes>
                     <include>**/*.jar</include>
@@ -271,6 +294,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
@@ -298,14 +324,17 @@
                 <configuration>
                     <fork>true</fork>
                     <executable> C:\Program Files\Java\jdk1.8.0_91\bin\javac.exe </executable>
+                    <compilerArguments>
+                        <extdirs>${project.basedir}/src/main/resources/lib</extdirs>
+                    </compilerArguments>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>7</source>
+                    <target>7</target>
                     <compilerArguments>
                         <bootclasspath> C:\Program Files\Java\jdk1.8.0_91\jre\lib\rt.jar </bootclasspath>
                     </compilerArguments>

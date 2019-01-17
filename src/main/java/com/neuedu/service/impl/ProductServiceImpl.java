@@ -288,6 +288,8 @@ public class ProductServiceImpl implements IProductService {
         //step6：返回
         return ServerResponse.createServerResponseBySuccess(null,pageInfo);
     }
+
+
     private ProductListVO assembleProductListVO(Product product){
         ProductListVO productListVO = new ProductListVO();
         productListVO.setCategoryId(product.getCategoryId());
